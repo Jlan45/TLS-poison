@@ -649,7 +649,7 @@ fn make_config(args: &Args, sess_gen: Arc<SessionIdGenerator>) -> Arc<rustls::Se
 }
 
 fn get_connection() -> redis::RedisResult<redis::Connection> {
-    let client = redis::Client::open("redis://redis/")?;
+    let client = redis::Client::open("redis://127.0.0.1:6379/")?;
     client.get_connection()
 }
 
