@@ -574,9 +574,19 @@ struct RedisPayloadGenerator {}
 
 impl SessionIdGenerator for RedisPayloadGenerator {
     fn gen_id(&self) -> [u8; 1234] {
+        println!("============================start-get-payload-from-redis============================");
         let bytes = get_payload();
+        println!("{:?}", bytes);
+
         debug_assert!(bytes.len() <= 1234);
         let mut d = [0u8; 1234];
+
+        // debug
+        let tmp = d[..bytes.len()].clone_from_slice(&bytes[..]);
+        //tmp
+        println!("{:?}", tmp);
+        println!("============================end============================");
+
         d[..bytes.len()].clone_from_slice(&bytes[..]);
         d
     }
