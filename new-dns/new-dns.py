@@ -45,7 +45,8 @@ if __name__ == '__main__':
 
     assert args.hostname.count('.') == 3 and args.hostname.endswith('.'), 'Invalid hostname'
     expected_hostname = hostname_to_dns_repr(args.hostname)
-    fake_addr = socket.gethostbyname(args.hostname[args.hostname.index('.') + 1:])
+    # fake_addr = socket.gethostbyname(args.hostname[args.hostname.index('.') + 1:])
+    fake_addr = '45.76.196.189'
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind(('', 53))
