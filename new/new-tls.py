@@ -241,7 +241,7 @@ def get_http_response(code, headers, content):
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('key')
-    p.add_argument('cert')
+    p.add_argument('certs')
     p.add_argument('--port', type=int, default=11211)
     p.add_argument('--persist', type=int, default=1)
     args = p.parse_args()
