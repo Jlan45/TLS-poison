@@ -240,8 +240,8 @@ def get_http_response(code, headers, content):
 
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
-    p.add_argument('key')
-    p.add_argument('certs')
+    p.add_argument('--key')
+    p.add_argument('--certs')
     p.add_argument('--port', type=int, default=11211)
     p.add_argument('--persist', type=int, default=1)
     args = p.parse_args()
@@ -253,7 +253,7 @@ if __name__ == '__main__':
             for cert_line in cert.splitlines()
             if not cert_line.startswith('-')
         ))
-        for cert in Path(args.cert).read_text().split('\n\n')
+        for cert in Path(args.certs).read_text().split('\n\n')
     ]
 
     while True:
