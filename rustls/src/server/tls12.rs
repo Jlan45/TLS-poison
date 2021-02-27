@@ -251,10 +251,13 @@ pub fn emit_ticket(handshake: &mut HandshakeDetails,
     // report an error. Send an empty one.
     let plain = get_server_session_value_tls12(handshake, sess)
         .get_encoding();
+    println!("============================Set Session Tickets Now============================");
     let ticket = sess.config
         .ticketer
         .encrypt(&plain)
         .unwrap_or_else(Vec::new);
+    println!("{:?}", ticket);
+    println!("============================Set Session Tickets Done============================");
     let ticket_lifetime = sess.config.ticketer.get_lifetime();
 
     let m = Message {
