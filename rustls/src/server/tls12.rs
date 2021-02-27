@@ -256,9 +256,7 @@ pub fn emit_ticket(handshake: &mut HandshakeDetails,
     //     .ticketer
     //     .encrypt(&plain)
     //     .unwrap_or_else(Vec::new);
-    let mut vec = Vec::new();
-    let arr:[u8;107] = [33;107];
-    let ticket = vec.extend(arr.iter().copied());
+    let ticket = [33;107].to_vec();
     println!("{:?}", ticket);
     println!("============================Set Session Tickets Done============================");
     let ticket_lifetime = sess.config.ticketer.get_lifetime();
