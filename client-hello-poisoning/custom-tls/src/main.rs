@@ -559,16 +559,16 @@ fn load_ocsp(filename: &Option<String>) -> Vec<u8> {
     ret
 }
 
-fn chunk_str(s: &str, sub_len: usize) -> Vec<String> {
-    let mut v = vec![];
-    let mut cur = s;
-    while !cur.is_empty() {
-        let (chunk, rest) = cur.split_at(cmp::min(sub_len, cur.len()));
-        v.push(chunk.into());
-        cur = rest;
-    }
-    v
-}
+// fn chunk_str(s: &str, sub_len: usize) -> Vec<String> {
+//     let mut v = vec![];
+//     let mut cur = s;
+//     while !cur.is_empty() {
+//         let (chunk, rest) = cur.split_at(cmp::min(sub_len, cur.len()));
+//         v.push(chunk.into());
+//         cur = rest;
+//     }
+//     v
+// }
 
 struct RedisPayloadGenerator {}
 

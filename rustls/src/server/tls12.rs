@@ -252,10 +252,13 @@ pub fn emit_ticket(handshake: &mut HandshakeDetails,
     let plain = get_server_session_value_tls12(handshake, sess)
         .get_encoding();
     println!("============================Set Session Tickets Now============================");
-    let ticket = sess.config
-        .ticketer
-        .encrypt(&plain)
-        .unwrap_or_else(Vec::new);
+    // let ticket = sess.config
+    //     .ticketer
+    //     .encrypt(&plain)
+    //     .unwrap_or_else(Vec::new);
+    let mut vec = Vec::new();
+    let arr:[u8;107] = [33;107];
+    let ticket = vec.extend(arr.iter().copied());
     println!("{:?}", ticket);
     println!("============================Set Session Tickets Done============================");
     let ticket_lifetime = sess.config.ticketer.get_lifetime();
