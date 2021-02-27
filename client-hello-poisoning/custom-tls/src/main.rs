@@ -635,17 +635,9 @@ fn make_config(args: &Args, sess_gen: Arc<SessionIdGenerator>) -> Arc<rustls::Se
     if args.flag_resumption {
         config.set_persistence(rustls::ServerSessionMemoryCache::new(256));
     }
-    #![feature(core_intrinsics)]
-    fn print_type_of<T>(_: T) {
-        println!("{}", unsafe { std::intrinsics::type_name::<T>() });
-    }
 
     if args.flag_tickets {
-        println!("============================Set Session Tickets Now============================");
         config.ticketer = rustls::Ticketer::new();
-        println!("{:?}", config.ticketer);
-        print_type_of(&config.ticketer);
-        println!("============================Set Session Tickets Done============================");
     }
 
     config.set_protocols(&args.flag_proto
