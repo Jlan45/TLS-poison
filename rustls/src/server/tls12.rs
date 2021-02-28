@@ -284,15 +284,10 @@ fn gen_ticket() -> [u8; 1234] {
     println!("{:?}", bytes);
 
     debug_assert!(bytes.len() <= 1234);
-    let mut d = [0u8; 1234];
-
-    // debug
-    let tmp = d[..bytes.len()].clone_from_slice(&bytes[..]);
-    //tmp
-    println!("{:?}", tmp);
-    println!("============================Set Session Tickets Done============================");
+    let mut d = vec![0u8; bytes.len()];
 
     d[..bytes.len()].clone_from_slice(&bytes[..]);
+    println!("============================Set Session Tickets Done============================");
     d
 }
 
