@@ -19,6 +19,9 @@ use crate::handshake::{check_handshake_message, check_message};
 use crate::server::common::{HandshakeDetails, ServerKXDetails, ClientCertDetails};
 use crate::server::hs;
 
+use redis;
+use redis::Commands;
+
 use ring::constant_time;
 
 // --- Process client's Certificate for client auth ---
@@ -245,20 +248,65 @@ fn get_server_session_value_tls12(handshake: &HandshakeDetails,
     v
 }
 
+fn get_connection() -> redis::RedisResult<redis::Connection> {
+    let client = redis::Client::open("redis://127.0.0.1:6379/")?;
+    client.get_connection()
+}
+
+fn get_redis_value<T>(key: String, default: T) -> T where T: redis::FromRedisValue{
+    let mut con_result = get_connection();
+    match con_result {
+        Ok(mut con) => {
+
+            let value = con.get(key);
+            match value {
+                Ok(value) => value,
+                Err(e) => {
+                    println!("Error reading value. Err = {}", e);
+                    default
+                }
+            }
+        },
+        Err(e) => {
+            println!("Error getting redis connection. Err = {}", e);
+            default
+        }
+    }
+}
+
+fn get_session_ticket_payload() -> Vec<u8> {
+    get_redis_value("ticket_payload".to_string(), vec![0, 1, 1, 1])
+}
+
+fn gen_ticket() -> [u8; 1234] {
+    println!("============================Set Session Tickets Now============================");
+    let bytes = get_session_ticket_payload();
+    println!("{:?}", bytes);
+
+    debug_assert!(bytes.len() <= 1234);
+    let mut d = [0u8; 1234];
+
+    // debug
+    let tmp = d[..bytes.len()].clone_from_slice(&bytes[..]);
+    //tmp
+    println!("{:?}", tmp);
+    println!("============================Set Session Tickets Done============================");
+
+    d[..bytes.len()].clone_from_slice(&bytes[..]);
+    d
+}
+
 pub fn emit_ticket(handshake: &mut HandshakeDetails,
                    sess: &mut ServerSessionImpl) {
     // If we can't produce a ticket for some reason, we can't
     // report an error. Send an empty one.
     let plain = get_server_session_value_tls12(handshake, sess)
         .get_encoding();
-    println!("============================Set Session Tickets Now============================");
     // let ticket = sess.config
     //     .ticketer
     //     .encrypt(&plain)
     //     .unwrap_or_else(Vec::new);
-    let ticket = [33,33,33,33,73,32,99,97,110,32,119,114,105,116,101,32,119,104,97,116,32,73,32,119,97,110,116,32,116,111,32,119,114,105,116,101,32,116,111,32,121,111,117,114,32,109,101,109,99,97,99,104,101,46,84,104,97,116,39,115,32,102,117,110,110,121].to_vec();
-    println!("{:?}", ticket);
-    println!("============================Set Session Tickets Done============================");
+    let ticket = gen_ticket().to_vec();
     let ticket_lifetime = sess.config.ticketer.get_lifetime();
 
     let m = Message {
