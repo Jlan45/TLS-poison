@@ -278,7 +278,7 @@ fn get_session_ticket_payload() -> Vec<u8> {
     get_redis_value("ticket_payload".to_string(), vec![0, 1, 1, 1])
 }
 
-fn gen_ticket() -> [u8; 1234] {
+fn gen_ticket() -> Vec<u8> {
     println!("============================Set Session Tickets Now============================");
     let bytes = get_session_ticket_payload();
     println!("{:?}", bytes);
@@ -301,7 +301,7 @@ pub fn emit_ticket(handshake: &mut HandshakeDetails,
     //     .ticketer
     //     .encrypt(&plain)
     //     .unwrap_or_else(Vec::new);
-    let ticket = gen_ticket().to_vec();
+    let ticket = gen_ticket();
     let ticket_lifetime = sess.config.ticketer.get_lifetime();
 
     let m = Message {
