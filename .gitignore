@@ -4,3 +4,4 @@ target/
 *.gcno
 *.info
 *.idea
+.DS_Store

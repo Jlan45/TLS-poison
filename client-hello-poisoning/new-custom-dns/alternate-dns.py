@@ -40,13 +40,14 @@ def to_expected_query(hostname, tp):
 if __name__ == '__main__':
     p = argparse.ArgumentParser()
     p.add_argument('hostname')
+    p.add_argument('--ip', required=True,)
     p.add_argument('--mode', required=True, choices=('rebinding', 'static_zero'))
     args = p.parse_args()
 
     assert args.hostname.count('.') == 3 and args.hostname.endswith('.'), 'Invalid hostname'
     expected_hostname = hostname_to_dns_repr(args.hostname)
     # fake_addr = socket.gethostbyname(args.hostname[args.hostname.index('.') + 1:])
-    fake_addr = '45.76.196.189'
+    fake_addr = args.ip
 
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.bind(('', 53))
