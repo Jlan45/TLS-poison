@@ -86,7 +86,6 @@ def get_spoofed_IP(domain, ip):
     global spoof_count
     global start
     global last_ip
-    start = time()
     last_ip = ip
 
     for d in HOSTS_LIST:

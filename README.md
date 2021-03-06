@@ -3,7 +3,33 @@ Modified from https://github.com/jmdx/TLS-poison. Have pruned the original repo.
 
 
 
-###	New DNS Alternater
+###	TLS Tool
+
+`cargo build`
+
+
+```
+cd TLS-poison/client-hello-poisoning/custom-tls
+target/debug/custom-tls -p 11211 --verbose --certs /root/tls/fullchain.pem --key /root/tls/privkey.pem http
+```
+
+
+```
+target/debug/custom-tls -p 11210 --verbose --tickets --certs /path/to/fullchain.pem --key /path/to/privkey.pem --protover 1.2 http
+```
+
+###  DNS Tool
+```
+cd /root/TLS-poison/client-hello-poisoning/custom-dns
+python3 alternate-dns.py dns.smuggling.xyz,127.0.0.1 -b 0.0.0.0 -t 139.159.160.211 -d 8.8.8.8
+```
+
+###  Proxy Tool
+```
+python2 proxy.py
+```
+
+###	New DNS Tool
 
 ```
 python3 alternate-dns.py example.com --ip x.x.x.x --mode static_zero

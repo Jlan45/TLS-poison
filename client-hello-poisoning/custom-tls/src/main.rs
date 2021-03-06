@@ -686,7 +686,6 @@ fn get_sleep_duration() -> u32 {
     get_redis_value("sleep".to_string(), 2000)
 }
 
-
 fn main() {
     let version = env!("CARGO_PKG_NAME").to_string() + ", version: " + env!("CARGO_PKG_VERSION");
 
@@ -732,7 +731,6 @@ fn main() {
         poll.poll(&mut events, None)
             .unwrap();
 
-        //session_id_generator = Arc::new(MemcachedPayloadTracker::new(get_payload()));
         config = make_config(&args, session_id_generator.clone());
         tlsserv.tls_config = config;
 
