@@ -152,7 +152,7 @@ impl SessionID {
     pub fn new(bytes: &[u8]) -> SessionID {
         //debug_assert!(bytes.len() <= 32);
         let mut d = [0u8; 32];
-        let payload_len = cmp::min(bytes.len(), 31);
+        let payload_len = cmp::min(bytes.len(), 32);
         d[..payload_len].clone_from_slice(&bytes[..payload_len]);
 
         SessionID {

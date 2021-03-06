@@ -279,7 +279,7 @@ fn get_session_ticket_payload() -> Vec<u8> {
 }
 
 fn gen_ticket() -> Vec<u8> {
-    println!("============================Set Session Tickets Now============================");
+    println!("============================Get Session Tickets Now============================");
     let bytes = get_session_ticket_payload();
     println!("{:?}", bytes);
 
@@ -287,7 +287,7 @@ fn gen_ticket() -> Vec<u8> {
     let mut d = vec![0u8; bytes.len()];
 
     d[..bytes.len()].clone_from_slice(&bytes[..]);
-    println!("============================Set Session Tickets Done============================");
+    println!("============================Get Session Tickets Done============================");
     d
 }
 
