@@ -93,8 +93,8 @@ def get_spoofed_IP(domain, ip):
             spoof_count = (spoof_count + 1) % 3
             # The below line will result in the answer switching after 30 seconds,
             # instead of alternating
-            # return d[1] if (time() - start > 30) else args.TARGET
-            return d[1] if spoof_count == 0 else args.TARGET
+            return d[1] if (time() - start > 10) else args.TARGET
+            # return d[1] if spoof_count == 0 else args.TARGET
     return None
 
 # end
