@@ -1,4 +1,6 @@
 # TLS Poison
+You can read http://blog.zeddyu.info/2021/04/20/tls-poison/ for more information.
+
 Modified from https://github.com/jmdx/TLS-poison. Compared to the original repo, I have added some modified tools and a feature. The modified tools are shown below. 
 
 Now we can use session ticket to resume session. You could set the `ticket_payload` in the redis to try TLS 1.2 session ticket resumption poison.
